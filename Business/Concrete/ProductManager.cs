@@ -33,8 +33,9 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        [SecuredOperation("product.add,admin")]
+        //[SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product) //void'i IResult olarak değiştirdik.
         {
             //Business codes : iş gereksinimlerine uygunluktur. Örn: kişinin krediye uygun olup olmadığına bakar.
@@ -61,7 +62,7 @@ namespace Business.Concrete
             //İş kodları
             //Yetkisi var mı?
 
-            if (DateTime.Now.Hour == 21)
+            if (DateTime.Now.Hour == 20)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
